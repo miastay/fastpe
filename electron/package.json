@@ -22,6 +22,7 @@
     "svelte": "^3.55.0"
   },
   "dependencies": {
+    "electron-reload": "^2.0.0-alpha.1",
     "rollup-plugin-sass": "^1.12.21",
     "rollup-plugin-scss": "^4.0.0",
     "sass": "^1.71.1",

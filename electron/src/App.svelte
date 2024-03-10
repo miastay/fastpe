@@ -1,18 +1,30 @@
 <script>
     import { onMount } from 'svelte';
+    import Report from './container/report.svelte';
 
 	export let name;
+    export let report = null;
 
     onMount(() => {
         tryFastp();
+        window.addEventListener("fastp-data", (e) => {
+            console.log(e.detail)
+            report = e.detail;
+        })
     })
 
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<div>
+    <h1>fastpe</h1>
+    {#if !report}
+        <div>upload report</div>
+    {/if}
+    {#if report}
+        <Report data={report} />
+    {/if}
+</div>
+
 
 <style lang="scss">
 	main {
@@ -28,6 +40,10 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
+
+    div {
+        outline: solid 1px magenta;
+    }
 
 	@media (min-width: 640px) {
 		main {

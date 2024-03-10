@@ -4,8 +4,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
-import sass from 'rollup-plugin-sass';
 import scss from 'rollup-plugin-scss';
+import css from 'rollup-plugin-css-only';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -37,22 +37,17 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'public/build/bundle.js'
+		file: './public/build/bundle.js'
 	},
 	plugins: [
-        nodePolyfills({
-            exclude: 'child_process'
-        }),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
-				dev: !production
-			}
+				dev: !production,
+                css: true
+			},
+            emitCss: false
 		}),
-        scss({
-            output: `bundle.css`
-        }),
-        //sass({ output: 'bundle.css' }),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
@@ -71,11 +66,12 @@ export default {
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
-		!production && livereload('public'),
+		!production && livereload('./public'),
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
+        css()
 	],
 	watch: {
 		clearScreen: false
