@@ -1,4 +1,7 @@
 <script>
+    import Icon from './icon.svelte';
+
+
     export let categoryScores = null;
 
     let categories = {
@@ -8,7 +11,11 @@
         },
         "base-sequence-quality" : {
             "name": "Per-base sequence quality",
-            "quality": "pass"
+            "quality": "fail"
+        },
+        "other" : {
+            "name": "whether i like it",
+            "quality": "warn"
         },
     }
 
@@ -16,15 +23,43 @@
 
 </script>
 
-<div>
+<div class="category-container">
     {#each Object.entries(categories) as cat, index}
-        <div>
+        <button class="category">
+            <Icon type={cat[1].quality} />
             <h3>{cat[1].name}</h3>
-            <h3>{cat[1].quality}</h3>
-        </div>
+        </button>
     {/each}
 </div>
 
 <style lang='scss'>
+    .category-container {
+        padding: 0em 1em;
+        box-sizing: border-box;
+    }
+    .category {
+        width: 100%;
+        padding: 2em 1em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5em;
+        border-bottom: solid 1px #aaa;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+    .category:hover {
+        background: #efefef;
+        cursor: pointer;
+    }
+    .category:active {
+        background: #dedede;
+        cursor: pointer;
+    }
 
+    .category h3 {
+        margin-block: 0;
+        white-space: nowrap;
+        user-select: none;
+    }
 </style>

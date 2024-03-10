@@ -1,15 +1,15 @@
 <script>
     import { onMount } from 'svelte';
+    import { report } from './store';
     import Report from './container/report.svelte';
 
 	export let name;
-    export let report = null;
 
     onMount(() => {
         tryFastp();
         window.addEventListener("fastp-data", (e) => {
             console.log(e.detail)
-            report = e.detail;
+            report.set(e.detail)
         })
     })
 
